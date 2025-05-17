@@ -1,0 +1,80 @@
+.student-profile-form {
+    max-width: 500px;
+    margin: 50px auto;
+    margin-top:120px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px 6px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+}
+
+.student-profile-form label {
+    display: block;
+    margin-bottom: 15px;
+    font-weight: bold;
+    color: #333;
+}
+
+.student-profile-form input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.student-profile-form input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.student-profile-form .course-of-study,
+.student-profile-form .grades,
+.student-profile-form .location,
+.student-profile-form .annual-income {
+    margin-bottom: 20px;
+}
+
+.category-container {
+    display: flex;
+    align-items: center;
+}
+
+.category-label {
+    margin-right: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+.row-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.row-container label,
+.category-container {
+    flex: 1;
+}
+
+.student-profile-form button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.student-profile-form button:hover {
+    background-color: #0056b3;
+}
