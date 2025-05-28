@@ -51,12 +51,15 @@ const ScholarshipHome = () => {
         </aside>
 
         <section className="results-list">
-          {[1, 2, 3, 4].map((id) => (
+          {[...Array(20).keys()].map((id) => (
             <article key={id} className="scholarship-card">
               <h3>Scholarship Title {id}</h3>
               <p className="amount">Up to ₹10,000</p>
               <p className="deadline">Deadline: June 30, 2025</p>
-              <button>View Details</button>
+              <div className="card-buttons">
+                <button>View Details</button>
+                <button>favourites</button>
+              </div>
             </article>
           ))}
         </section>
