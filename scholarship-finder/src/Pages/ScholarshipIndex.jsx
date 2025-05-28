@@ -39,7 +39,7 @@ const ScholarshipHome = () => {
               <option>Next 90 days</option>
             </select>
           </div>
-          <div className="filter-group">
+          {/* <div className="filter-group">
             <label>Type</label>
             <select>
               <option>All Types</option>
@@ -47,7 +47,7 @@ const ScholarshipHome = () => {
               <option>Need-based</option>
               <option>Career-specific</option>
             </select>
-          </div>
+          </div> */}
         </aside>
 
         <section className="results-list">
