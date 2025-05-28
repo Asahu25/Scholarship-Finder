@@ -7,7 +7,7 @@ import {
   Route
 }from "react-router-dom";
 import LoginPage from "./Pages/LoginPage"
-import StudentProfileForm from "./Pages/StudentProfileForm"
+import Favourites from "./Pages/Favourites"
 import ScholarshipIndex from "./Pages/ScholarshipIndex"
 
 export default function App(){
@@ -17,7 +17,7 @@ export default function App(){
       <Routes>
         <Route exact path = "/home" element  = {<ScholarshipIndex />} />
         <Route exact path = "/login" element = {<LoginPage />} />
-        {/* <Route exact path = "/favourites" element = {<Favourites />} />  */}
+        <Route exact path = "/favourites" element = {<Favourites />} />
       </Routes>
     </Router>
   );
