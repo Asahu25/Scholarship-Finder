@@ -48,3 +48,9 @@
     box-sizing: border-box;
     color: #007bff; /* Blue text on hover */
 }
+
+.navbar-button.active {
+    background-color: #007bff; /* Blue background for active button */
+    color: #fff; /* White text for active button */
+    border-radius: 6px; /* Rounded corners for active button */
+}
