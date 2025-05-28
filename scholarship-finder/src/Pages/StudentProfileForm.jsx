@@ -3,6 +3,7 @@ import "../Styles/StudentProfileForm.css";
 
 export default function StudentProfileForm() {
     return (
+        <>
         <form className="student-profile-form">
             <label>
                 Course of Study
@@ -28,5 +29,6 @@ export default function StudentProfileForm() {
             </div>
             <button type="submit">Submit</button>
         </form>
+        </>
     );
 }
