@@ -3,6 +3,13 @@
     justify-content: space-between;
     padding: 1rem; /* Reduced padding for smaller navbar */
     background-color: #f8f9fa;
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+
+.navbar:hover {
+    background-color: #e9ecef; /* Slightly darker background on hover */
 }
 
 .navbar-left,
@@ -14,6 +21,12 @@
 .navbar-link {
     text-decoration: none;
     color: #000;
+    font-weight: 500; /* Modern font weight */
+    transition: color 0.3s ease; /* Smooth transition for color */
+}
+
+.navbar-link:hover {
+    color: #007bff; /* Blue color on hover */
 }
 
 .navbar-button {
@@ -25,10 +38,13 @@
     text-decoration: none;
     padding: 0.5rem 1rem; /* Ensure consistent button size */
     box-sizing: border-box;
+    font-weight: 600; /* Slightly bolder text */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transitions */
 }
 
 .navbar-button:hover {
     background-color: #e0e0e0;
     border-radius: 6px;
     box-sizing: border-box;
+    color: #007bff; /* Blue text on hover */
 }
