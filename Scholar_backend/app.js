@@ -7,9 +7,5 @@ const app = express();
 
 const PORT = 3000;
 
-mongoConnect((client)=>{
-    console.log(client);
-    app.listen(PORT, () => {
-  console.log(`Server running on address http://localhost:${PORT}`);
-});
-})
+app.listen(PORT, () => {
+  console.log(`Server running on address http://localhost:${PORT}`)});

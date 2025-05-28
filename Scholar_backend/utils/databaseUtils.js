@@ -10,7 +10,7 @@ const mongoConnect = (callback) => {
   MongoClient.connect(MONGO_URL)
   .then(client => {
     callback();
-    _db = client.db('ScholarshipFinder');
+    //_db = client.db('ScholarshipFinder');
   }).catch(err => {
     console.log('Error while connecting to Mongo: ', err);
   });
