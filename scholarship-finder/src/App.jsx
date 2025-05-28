@@ -31,7 +31,11 @@ export default function App() {
       <Routes>
         <Route
           path="/home"
-          element={<ScholarshipHome addToFavourites={addToFavourites} />}
+          element={
+            <ScholarshipHome
+              addToFavourites={addToFavourites}
+              removeFromFavourites={removeFromFavourites}
+              favouriteList={favourites} />}
         />
         <Route path="/login" element={<LoginPage />} />
         <Route

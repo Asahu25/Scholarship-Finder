@@ -205,13 +205,30 @@ html, body, #root {
 }
 
 .card-buttons button:hover {
-  background: #ffb700;
+  background-color: darkgreen;
   /* background: #28a745; */
   transform: scale(1.05);
 }
 
-.fav-button.added {
-  background-color: #28a745; /* green */
+.fav-button {
+  background-color: #007bff;
   color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.fav-button:hover {
+  background-color: #0056b3;
+}
+
+.fav-button.added {
+  background-color: #dc3545;
+}
+
+.fav-button.added:hover {
+  background-color: darkred;
 }
 

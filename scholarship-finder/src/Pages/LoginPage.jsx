@@ -80,7 +80,7 @@ function LoginPage() {
           className="side-image"
         />
         <div className="gradient-overlay" />
-        <div className="overlay-text">Welcome to Scholarship finder!</div>
+        <div className="overlay-text">Welcome to Scholar Compass!</div>
       </div>
 
       {/* <div>
