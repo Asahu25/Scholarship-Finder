@@ -1,23 +1,20 @@
 import React from 'react';
 import '../Styles/ScholarshipIndex.css';
-import { useState } from 'react'
 
-const ScholarshipHome = () => {
-    const [favourites, setFavourites] = useState({});
-
-  const toggleFavourite = (id) => {
-    setFavourites((prev) => ({
-      ...prev,
-      [id]: !prev[id]
-    }));
-  };
+const ScholarshipHome = ({ addToFavourites }) => {
+  const scholarships = [...Array(20).keys()].map((id) => ({
+    id,
+    title: `Scholarship Title ${id}`,
+    amount: '₹10,000',
+    deadline: 'June 30, 2025',
+  }));
 
   return (
     <div className="scholarship-container">
       <header className="hero-section">
         <div className="hero-content">
           <h1>Find Scholarships to Help Pay for College</h1>
-          <p>Search from over X scholarships worth more than Y ruppees.</p>
+          <p>Search from over X scholarships worth more than Y rupees.</p>
           <form className="search-form">
             <input
               type="text"
@@ -35,7 +32,7 @@ const ScholarshipHome = () => {
             <label>Amount</label>
             <select>
               <option>Any</option>
-              <option>₹10,00+</option>
+              <option>₹10,000+</option>
               <option>₹50,000+</option>
               <option>₹1,00,000+</option>
             </select>
@@ -49,31 +46,17 @@ const ScholarshipHome = () => {
               <option>Next 90 days</option>
             </select>
           </div>
-          {/* <div className="filter-group">
-            <label>Type</label>
-            <select>
-              <option>All Types</option>
-              <option>Merit-based</option>
-              <option>Need-based</option>
-              <option>Career-specific</option>
-            </select>
-          </div> */}
         </aside>
 
         <section className="results-list">
-          {[...Array(20).keys()].map((id) => (
-            <article key={id} className="scholarship-card">
-              <h3>Scholarship Title {id}</h3>
-              <p className="amount">Up to ₹10,000</p>
-              <p className="deadline">Deadline: June 30, 2025</p>
+          {scholarships.map((scholarship) => (
+            <article key={scholarship.id} className="scholarship-card">
+              <h3>{scholarship.title}</h3>
+              <p className="amount">Up to {scholarship.amount}</p>
+              <p className="deadline">Deadline: {scholarship.deadline}</p>
               <div className="card-buttons">
                 <button>View Details</button>
-                <button
-                  className={`fav-button ${favourites[id] ? 'added' : ''}`}
-                  onClick={() => toggleFavourite(id)}
-                >
-                  {favourites[id] ? 'Added to favourites' : 'Add to favourites'}
-                </button>
+                <button onClick={() => addToFavourites(scholarship)}>Favourites</button>
               </div>
             </article>
           ))}
