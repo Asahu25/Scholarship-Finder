@@ -206,6 +206,12 @@ html, body, #root {
 
 .card-buttons button:hover {
   background: #ffb700;
+  /* background: #28a745; */
   transform: scale(1.05);
+}
+
+.fav-button.added {
+  background-color: #28a745; /* green */
+  color: white;
 }
 

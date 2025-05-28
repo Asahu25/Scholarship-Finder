@@ -1,7 +1,17 @@
 import React from 'react';
 import '../Styles/ScholarshipIndex.css';
+import { useState } from 'react'
 
 const ScholarshipHome = () => {
+    const [favourites, setFavourites] = useState({});
+
+  const toggleFavourite = (id) => {
+    setFavourites((prev) => ({
+      ...prev,
+      [id]: !prev[id]
+    }));
+  };
+
   return (
     <div className="scholarship-container">
       <header className="hero-section">
@@ -58,7 +68,12 @@ const ScholarshipHome = () => {
               <p className="deadline">Deadline: June 30, 2025</p>
               <div className="card-buttons">
                 <button>View Details</button>
-                <button>favourites</button>
+                <button
+                  className={`fav-button ${favourites[id] ? 'added' : ''}`}
+                  onClick={() => toggleFavourite(id)}
+                >
+                  {favourites[id] ? 'Added to favourites' : 'Add to favourites'}
+                </button>
               </div>
             </article>
           ))}

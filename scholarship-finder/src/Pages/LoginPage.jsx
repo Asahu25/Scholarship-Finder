@@ -8,7 +8,7 @@ import GoogleButton from '../components/GoogleButton'
 import Loader from '../components/CircularLoader';
 
 function LoginPage() {
-  const [action, setAction] = useState("Sign Up")
+  const [action, setAction] = useState("Login")
 
   return (
     <div className="main-container">
