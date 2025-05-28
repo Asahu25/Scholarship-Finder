@@ -1,21 +1,68 @@
-export default function ScholarshipInd() {
-    return (
-        <div style={{ display: 'flex', flexDirection: 'row', padding: '20px' }}>
-            <div style={{ flex: 1, borderRight: '1px solid #ccc', padding: '10px' }}>
-                <h3>Filters</h3>
-                <ul>
-                    <li>Filter 1</li>
-                    <li>Filter 2</li>
-                    <li>Filter 3</li>
-                </ul>
-            </div>
-            <div style={{ flex: 3, padding: '10px' }}>
-                <h3>Scholarship Cards</h3>
-                <div style={{ border: '1px solid #ccc', borderRadius: '5px', padding: '15px', marginBottom: '10px' }}>
-                    <h4>Scholarship Name</h4>
-                    <p>Description of the scholarship.</p>
-                </div>
-            </div>
+import React from 'react';
+import '../Styles/ScholarshipIndex.css';
+
+const ScholarshipHome = () => {
+  return (
+    <div className="scholarship-container">
+      <header className="hero-section">
+        <div className="hero-content">
+          <h1>Find Scholarships to Help Pay for College</h1>
+          <p>Search from over X scholarships worth more than Y ruppees.</p>
+          <form className="search-form">
+            <input
+              type="text"
+              placeholder="Enter keywords, school name, or fields of study"
+            />
+            <button type="submit">Search</button>
+          </form>
         </div>
-    );
-}
+      </header>
+
+      <main className="main-content">
+        <aside className="filters-sidebar">
+          <h2>Filter by</h2>
+          <div className="filter-group">
+            <label>Amount</label>
+            <select>
+              <option>Any</option>
+              <option>₹10,00+</option>
+              <option>₹50,000+</option>
+              <option>₹1,00,000+</option>
+            </select>
+          </div>
+          <div className="filter-group">
+            <label>Deadline</label>
+            <select>
+              <option>Anytime</option>
+              <option>Next 30 days</option>
+              <option>Next 60 days</option>
+              <option>Next 90 days</option>
+            </select>
+          </div>
+          <div className="filter-group">
+            <label>Type</label>
+            <select>
+              <option>All Types</option>
+              <option>Merit-based</option>
+              <option>Need-based</option>
+              <option>Career-specific</option>
+            </select>
+          </div>
+        </aside>
+
+        <section className="results-list">
+          {[1, 2, 3, 4].map((id) => (
+            <article key={id} className="scholarship-card">
+              <h3>Scholarship Title {id}</h3>
+              <p className="amount">Up to ₹10,000</p>
+              <p className="deadline">Deadline: June 30, 2025</p>
+              <button>View Details</button>
+            </article>
+          ))}
+        </section>
+      </main>
+    </div>
+  );
+};
+
+export default ScholarshipHome;

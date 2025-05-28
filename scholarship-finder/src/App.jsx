@@ -9,13 +9,14 @@ import {
 import LoginPage from "./Pages/LoginPage"
 import Favourites from "./Pages/Favourites"
 import ScholarshipIndex from "./Pages/ScholarshipIndex"
+import ScholarshipHome from './Pages/ScholarshipIndex';
 
 export default function App(){
   return(
     <Router>
       <NavBar />
       <Routes>
-        <Route exact path = "/home" element  = {<ScholarshipIndex />} />
+        <Route exact path = "/home" element  = {<ScholarshipHome />} />
         <Route exact path = "/login" element = {<LoginPage />} />
         <Route exact path = "/favourites" element = {<Favourites />} />
       </Routes>
