@@ -2,7 +2,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import { Navigate} from 'react-router-dom';
 
 import NavBar from "./components/navBar";
 import LoginPage from "./Pages/LoginPage";
@@ -29,14 +30,15 @@ export default function App() {
     <Router>
       <NavBar />
       <Routes>
-        <Route
-          path="/home"
-          element={
-            <ScholarshipHome
-              addToFavourites={addToFavourites}
-              removeFromFavourites={removeFromFavourites}
-              favouriteList={favourites} />}
-        />
+        <Route path='/' element={ <Navigate to="/home" /> }/>
+          <Route
+            path="/home"
+            element={
+              <ScholarshipHome
+                addToFavourites={addToFavourites}
+                removeFromFavourites={removeFromFavourites}
+                favouriteList={favourites} />}
+          />
         <Route path="/login" element={<LoginPage />} />
         <Route
           path="/favourites"
