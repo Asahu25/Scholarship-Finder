@@ -3,6 +3,5 @@ const scholarItem = express.Router();
 
 const scholarItemController = require("../controllers/scholarItemController");
 
-scholarItem.get("/", scholarItemController.getItem);
-scholarItem.post("/", scholarItemController.addItem);
+scholarItem.get("/api/getItem", scholarItemController.getItem);
 module.exports = scholarItem;

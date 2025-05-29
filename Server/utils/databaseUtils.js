@@ -8,12 +8,15 @@ let _db;
 
 const mongoConnect = (callback) => {
   MongoClient.connect(MONGO_URL)
-  .then(client => {
-    callback();
-    _db = client.db('ScholarCompass');
-  }).catch(err => {
-    console.log('Error while connecting to Mongo: ', err);
-  });
+    .then(client => {
+      console.log("Connected to MongoDB"); // Log successful connection
+      _db = client.db('ScholarCompass');
+      console.log("Using database:", _db.databaseName); // Log the database name
+      callback();
+    })
+    .catch(err => {
+      console.error("Error while connecting to MongoDB:", err); // Log connection errors
+    });
 }
 
 const getDB = () => {

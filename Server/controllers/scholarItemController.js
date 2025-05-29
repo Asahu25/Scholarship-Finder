@@ -1,9 +1,11 @@
 const ScholarIndex = require("../models/ScholarIndex");
 
-exports.getItem = async(req, res, next)=>{
-    try{
+exports.getItem = async (req, res, next) => {
+    try {
         const items = await ScholarIndex.fetchAll();
-    }catch(err){
-        next(err);
+        res.status(200).json(items); // Send the fetched data as JSON
+    } catch (err) {
+        console.error("Error in getItem:", err); // Log the error
+        res.status(500).json({ error: "Failed to fetch scholarships" }); // Send error response
     }
-}
+};

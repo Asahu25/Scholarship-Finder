@@ -1,13 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../Styles/ScholarshipIndex.css';
+import { addItemFromServer } from "../services/scholarItemServices";
 
 const ScholarshipHome = ({ addToFavourites, removeFromFavourites, favouriteList = [] }) => {
-  const scholarships = [...Array(20).keys()].map((id) => ({
-    id,
-    title: `Scholarship Title ${id}`,
-    amount: '₹10,000',
-    deadline: 'June 30, 2025',
-  }));
+  const [scholarships, setScholarships] = useState([]);
+  useEffect(() => {
+    const fetchScholarships = async () => {
+        try {
+            const data = await addItemFromServer(); 
+            console.log("Scholarships Data:", data); 
+            setScholarships(data); // Set the fetched data to state
+        } catch (error) {
+            console.error("Error fetching scholarships:", error);
+        }
+    };
+
+    fetchScholarships();
+  }, []);
 
   const isFavourite = (id) => favouriteList.some((sch) => sch.id === id);
 
@@ -18,7 +27,6 @@ const ScholarshipHome = ({ addToFavourites, removeFromFavourites, favouriteList 
       addToFavourites(scholarship);
     }
   };
-
 
   return (
     <div className="scholarship-container">
@@ -60,27 +68,30 @@ const ScholarshipHome = ({ addToFavourites, removeFromFavourites, favouriteList 
         </aside>
 
         <section className="results-list">
-          {scholarships.map((scholarship) => {
-            const fav = isFavourite(scholarship.id); 
+          {scholarships.length === 0 ? (
+            <p>No scholarships available. Please try again later.</p> // Fallback UI
+          ) : (
+            scholarships.map((scholarship) => {
+              const fav = isFavourite(scholarship.id);
 
-            return (
-              <article key={scholarship.id} className="scholarship-card">
-                <h3>{scholarship.title}</h3>
-                <p className="amount">Up to {scholarship.amount}</p>
-                <p className="deadline">Deadline: {scholarship.deadline}</p>
-                <div className="card-buttons">
-                  <button>View Details</button>
-                  <button
-                    onClick={() => handleFavouriteClick(scholarship)}
-                    className={`fav-button ${fav ? 'added' : ''}`}
-                  >
-                    {fav ? 'Remove from Favourites' : 'Add to Favourites'}
-                  </button>
-                </div>
-              </article>
-            );
-          })}
-
+              return (
+                <article key={scholarship.id} className="scholarship-card">
+                  <h3>{scholarship.ScholarTitle}</h3>
+                  <p className="amount">Up to {scholarship.Amount}</p>
+                  <p className="deadline">Deadline: {scholarship.Deadline}</p>
+                  <div className="card-buttons">
+                    <button>View Details</button>
+                    <button
+                      onClick={() => handleFavouriteClick(scholarship)}
+                      className={`fav-button ${fav ? 'added' : ''}`}
+                    >
+                      {fav ? 'Remove from Favourites' : 'Add to Favourites'}
+                    </button>
+                  </div>
+                </article>
+              );
+            })
+          )}
         </section>
       </main>
     </div>

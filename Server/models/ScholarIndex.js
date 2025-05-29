@@ -7,12 +7,16 @@ module.exports = class ScholarIndex{
         this.Deadline = Deadline;
         this.ScholarUrl = ScholarUrl;
     }
-    fetchAll(){
+    static fetchAll(){
         const db = getDB();
-        return db.collection('Index').find().then((homes)=>{
-            console.log(homes);
-        }).catch((err)=>{
-            console.log("failed", err);
-        })
+        return db.collection('Index').find().toArray()
+            .then((homes) => {
+                console.log("Fetched Scholarships:", homes); // Add detailed logging
+                return homes; // Return the fetched data
+            })
+            .catch((err) => {
+                console.error("Error fetching scholarships:", err); // Use error logging
+                throw err; // Ensure errors are propagated
+            });
     }
 };
