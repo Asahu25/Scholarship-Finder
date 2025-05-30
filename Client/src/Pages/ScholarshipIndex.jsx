@@ -9,7 +9,7 @@ const ScholarshipHome = ({ addToFavourites, removeFromFavourites, favouriteList 
         try {
             const data = await addItemFromServer(); 
             console.log("Scholarships Data:", data); 
-            setScholarships(data); // Set the fetched data to state
+            setScholarships(data); 
         } catch (error) {
             console.error("Error fetching scholarships:", error);
         }

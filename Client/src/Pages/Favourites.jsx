@@ -1,7 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../Styles/ScholarshipIndex.css'; // Optional: reuse styles if needed
+import { addFavItemFromServer } from "../services/scholarItemServices";
 
-const Favourites = ({ favourites, removeFromFavourites }) => {
+const Favourites = ({ removeFromFavourites }) => {
+  const [favourites, setFavourites] = useState([]);
+
+  useEffect(() => {
+    const fetchFavourites = async () => {
+      try {
+        const data = await addFavItemFromServer();
+        console.log("Favourites Data:", data);
+        setFavourites(data); // Set the fetched data to state
+      } catch (error) {
+        console.error("Error fetching favourites:", error);
+      }
+    };
+
+    fetchFavourites();
+  }, []);
+
   return (
     <div className="scholarship-container">
       <header className="hero-section">
@@ -18,9 +35,9 @@ const Favourites = ({ favourites, removeFromFavourites }) => {
           ) : (
             favourites.map((scholarship) => (
               <article key={scholarship.id} className="scholarship-card">
-                <h3>{scholarship.title}</h3>
-                <p className="amount">Up to {scholarship.amount}</p>
-                <p className="deadline">Deadline: {scholarship.deadline}</p>
+                <h3>{scholarship.ScholarTitle}</h3>
+                <p className="amount">Up to {scholarship.Amount}</p>
+                <p className="deadline">Deadline: {scholarship.Deadline}</p>
                 <div className="card-buttons">
                   <button onClick={() => removeFromFavourites(scholarship.id)}>Remove</button>
                 </div>

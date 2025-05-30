@@ -17,6 +17,26 @@ export const addItemFromServer = async () => {
   }
 };
 
+export const addFavItemFromServer = async () => {
+  try {
+    const response = await fetch("http://localhost:3000/api/getFavItem");
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const items = await response.json();
+    console.log("Fetched Items from Server:", items); // Log the fetched data
+    if (!Array.isArray(items)) {
+      console.error("Expected an array but got:", items); // Log unexpected data structure
+      return [];
+    }
+    return items.map(scholarItemsToClient);
+  } catch (error) {
+    console.error("Error fetching items from server:", error);
+    return [];
+  }
+};
+
+
 export const scholarItemsToClient = (serverItem) => {
   return {
     id: serverItem._id,
