@@ -233,7 +233,7 @@ html, body, #root {
 }
 
 .visit-button {
-  display: inline-block;
+  display: inline-flex;
   padding: 0.5rem 1rem;
   background-color: #0055a6;
   color: white;
@@ -243,6 +243,8 @@ html, body, #root {
   cursor: pointer;
   text-align: center;
   transition: background 0.3s ease, transform 0.2s ease;
+  align-items: center;
+  justify-content: center;
 }
 
 .visit-button:hover {

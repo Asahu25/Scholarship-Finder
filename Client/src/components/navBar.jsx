@@ -1,5 +1,6 @@
 import "../Styles/navBar.css";
 import { useNavigate, useLocation } from "react-router-dom";
+import logo from "../assets/HomePageLogo.png"
 
 export default function NavBar() {
     const navigate = useNavigate();
@@ -11,10 +12,14 @@ export default function NavBar() {
         <nav className="navbar">
             <div className="navbar-left">
                 <button
-                    className={`navbar-button ${isActive("/home") ? "active" : ""}`}
+                    className="navbar-logo-button"
                     onClick={() => navigate("/home")}
                 >
-                    Home
+                    <img
+                        src={logo}
+                        alt="Scholar Compass"
+                        className="navbar-logo-img">
+                    </img>
                 </button>
                 <button
                     className={`navbar-button ${isActive("/favourites") ? "active" : ""}`}
