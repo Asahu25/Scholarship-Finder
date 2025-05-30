@@ -77,10 +77,17 @@ const ScholarshipHome = ({ addToFavourites, removeFromFavourites, favouriteList 
               return (
                 <article key={scholarship.id} className="scholarship-card">
                   <h3>{scholarship.ScholarTitle}</h3>
-                  <p className="amount">Up to {scholarship.Amount}</p>
+                  <p className="amount">Amount: {scholarship.Amount}</p>
                   <p className="deadline">Deadline: {scholarship.Deadline}</p>
                   <div className="card-buttons">
-                    <button>View Details</button>
+                    <a
+                      href={scholarship.ScholarUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="visit-button"
+                      >
+                        Go to website
+                    </a>
                     <button
                       onClick={() => handleFavouriteClick(scholarship)}
                       className={`fav-button ${fav ? 'added' : ''}`}
