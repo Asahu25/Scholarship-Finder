@@ -102,11 +102,15 @@ body{
     font-size: 19px;
 }
 
-.forgot-password{
-    padding-left: 19px;
-    margin-top: 27px;
-    color: #797979;
-    font-size: 18px;
+.forgot-password {
+  margin-top: 27px;
+  color: #797979;
+  font-size: 18px;
+
+  display: flex;
+  justify-content: center;
+  padding-left: 0;
+  margin-left: 0;  
 }
 
 .forgot-password span{
