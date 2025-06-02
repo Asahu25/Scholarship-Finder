@@ -6,21 +6,34 @@ import email_icon from '../assets/email.png';
 import family from '../assets/family.jpg';
 import GoogleButton from '../components/GoogleButton'
 import Loader from '../components/CircularLoader';
-import { signUp } from '../services/scholarItemServices';
+import { signUp, getUser } from '../services/scholarItemServices';
 
-const handleSubmit = (e, action) => {
+const handleSubmit = async (e, action, setError) => {
   e.preventDefault();
   let arr;
   if(action==="Sign Up"){
     arr = [e.target[0].value, e.target[1].value, e.target[2].value];
-    signUp(arr[0], arr[1], arr[2]);
+    const response = await signUp(arr[0], arr[1], arr[2]);
+    if(response instanceof Error) {
+      setError("Email already exists. Please choose a different  email.");
+    } else {
+      setError("");
+      // Handle successful signup here
+    }
   }else{
     arr = [e.target[0].value, e.target[1].value];
+    const response = await getUser(arr[0], arr[1]);
+    if(response instanceof Error) {
+      setError("Email does not exist. Please choose a different email / Please Sign Up.");
+    } else {
+      setError("");
+    }
   }
 }
 
 function LoginPage() {
   const [action, setAction] = useState("Login")
+  const [error, setError] = useState("")
   console.log(action);
   return (
     <div className="main-container">
@@ -30,7 +43,8 @@ function LoginPage() {
             <div className="text">{action}</div>
             <div className="underline"></div>
           </div>
-          <form onSubmit={(e) => handleSubmit(e, action)}>
+          {error && <div className="error-message">{error}</div>}
+          <form onSubmit={(e) => handleSubmit(e, action, setError)}>
                 <div className="inputs">
                   {action !== "Login" && (
                     <div className="input">

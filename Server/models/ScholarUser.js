@@ -5,12 +5,29 @@ module.exports = class ScholarUser{
         this.username = username;
         this.password = password;
     }
-    static fetchByUsername(username){
+
+    static async login(email, password) {
         const db = getDB();
-        return db.collection('Users').find({username: username}).toArray()
-            .then((users) => {
-                console.log("Fetched Users:", users); // Add detailed logging
-                return users; // Return the fetched data
-            })
+        const user = await db.collection('Users').findOne({ email: email });
+        
+        if (!user) {
+            throw new Error("Email does not exist. Please sign up first.");
+        }
+
+        if (user.password !== password) {
+            throw new Error("Incorrect password.");
+        }
+
+        // Don't send password back to client
+        const { password: _, ...userWithoutPassword } = user;
+        return userWithoutPassword;
+    }
+
+    static async fetchByEmail(email){
+        const db = getDB();
+        console.log(email);
+        const arr = await db.collection('Users').find({email: email}).toArray()
+        console.log(arr);
+        return arr;
     }
 }

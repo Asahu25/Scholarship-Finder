@@ -6,12 +6,14 @@ module.exports = class ScholarSignUp{
         this.email = email;
         this.password = password;
     }
-    static checkUsername(username){
+
+    static checkEmail(email){
         const db = getDB();
-        const arr =  db.collection('Users').find({_id: username}).toArray()
+        const arr =  db.collection('Users').find({email: email}).toArray()
         console.log(arr);
         return arr.length > 0;
     }
+    
     static save(user){
         const db = getDB();
         return db.collection('Users').insertOne(user);
