@@ -47,3 +47,22 @@ export const scholarItemsToClient = (serverItem) => {
   };
 };
 
+export const signUp = async (username, email, password) => {
+  try {
+    const response = await fetch("http://localhost:3000/api/signUp", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username, email, password }),
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    console.log("Sign up response:", data);
+    return data;
+  } catch (error) {
+    console.error("Error signing up:", error);
+  }
+};  

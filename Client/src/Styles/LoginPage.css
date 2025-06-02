@@ -171,7 +171,8 @@ body{
 .submit-container {
   display: flex;
   justify-content: center;
-  margin: 30px 0 10px 0; /* Slightly reduced spacing */
+  margin: 25px 0;
+  width: 100%;
 }
 
 
@@ -277,4 +278,68 @@ body{
     left: 20px;
     top: 20px;
   }
+}
+
+/* Button styling */
+.sub button {
+  width: 200px;
+  height: 45px;
+  background: linear-gradient(135deg, #4c00b4 0%, #6a11cb 100%);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(106, 17, 203, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.sub button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(106, 17, 203, 0.6);
+  background: linear-gradient(135deg, #5a00d5 0%, #7b21dc 100%);
+}
+
+.sub button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 10px rgba(106, 17, 203, 0.4);
+}
+
+.sub {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.sub input[type="submit"] {
+  width: 220px;
+  height: 59px;
+  color: #fff;
+  background: #4c00b4;
+  border: none;
+  border-radius: 50px;
+  font-size: 19px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.sub input[type="submit"]:hover {
+  background: #3c009d;
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(76, 0, 180, 0.3);
+}
+
+.sub input[type="submit"]:active {
+  transform: scale(0.95);
+}
+
+.sub {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
