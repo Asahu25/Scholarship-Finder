@@ -9,6 +9,7 @@ import NavBar from "./components/navBar";
 import LoginPage from "./Pages/LoginPage";
 import Favourites from "./Pages/Favourites";
 import ScholarshipHome from "./Pages/ScholarshipIndex";
+import ProfilePage from './Pages/Profile';
 
 export default function App() {
   const [favourites, setFavourites] = useState([]);
@@ -49,6 +50,7 @@ export default function App() {
             />
           }
         />
+        <Route path="/profile" element={<ProfilePage/>} />
       </Routes>
     </Router>
   );
