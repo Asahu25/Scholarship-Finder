@@ -30,6 +30,12 @@ export default function NavBar() {
             </div>
             <div className="navbar-right">
                 <button
+                    className={`navbar-button ${isActive("/profile") ? "active" : ""}`}
+                    onClick={() => navigate("/profile")}
+                >
+                    Profile
+                </button>
+                <button
                     className={`navbar-button ${isActive("/login") ? "active" : ""}`}
                     onClick={() => navigate("/login")}
                 >
