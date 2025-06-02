@@ -63,6 +63,26 @@ export const signUp = async (username, email, password) => {
     console.log("Sign up response:", data);
     return data;
   } catch (error) {
-    console.error("Error signing up:", error);
+    return error;
+  }
+};  
+
+export const getUser = async (email, password) => {
+  try {
+    const response = await fetch(`http://localhost:3000/api/login`, {
+      method: "POST",
+      headers: {  
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    console.log("User response:", data);
+    return data;
+  } catch (error) {
+    return error;
   }
 };  
