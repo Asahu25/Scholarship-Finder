@@ -20,5 +20,8 @@
   "homepage": "https://github.com/Asahu25/Scholarship-Finder#readme",
   "devDependencies": {
     "concurrently": "^9.1.2"
+  },
+  "dependencies": {
+    "connect-mongodb-session": "^5.0.0"
   }
 }

@@ -13,7 +13,6 @@ module.exports = class ScholarUser{
         if (!user) {
             throw new Error("Email does not exist. Please sign up first.");
         }
-
         if (user.password !== password) {
             throw new Error("Incorrect password.");
         }
@@ -21,13 +20,5 @@ module.exports = class ScholarUser{
         // Don't send password back to client
         const { password: _, ...userWithoutPassword } = user;
         return userWithoutPassword;
-    }
-
-    static async fetchByEmail(email){
-        const db = getDB();
-        console.log(email);
-        const arr = await db.collection('Users').find({email: email}).toArray()
-        console.log(arr);
-        return arr;
     }
 }
