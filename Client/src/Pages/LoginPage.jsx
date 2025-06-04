@@ -1,43 +1,66 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
 import '../Styles/LoginPage.css'
 import user_icon from '../assets/person.png';
 import password_icon from '../assets/password.png';
 import email_icon from '../assets/email.png';
 import family from '../assets/family.jpg';
 import GoogleButton from '../components/GoogleButton'
-import Loader from '../components/CircularLoader';
 import { signUp, getUser } from '../services/scholarItemServices';
 
-const handleSubmit = async (e, action, setError) => {
-  e.preventDefault();
-  let arr;
-  if(action==="Sign Up"){
-    arr = [e.target[0].value, e.target[1].value, e.target[2].value];
-    const response = await signUp(arr[0], arr[1], arr[2]);
-    if(response instanceof Error) {
-      setError("Email already exists. Please choose a different email.");
-    } else {
-      setError("");
-      sessionStorage.setItem('userEmail', arr[1]); // Store email in session storage
-      window.location.href = '/home'; // Redirect to home page
-    }
-  } else {
-    arr = [e.target[0].value, e.target[1].value];
-    const response = await getUser(arr[0], arr[1]);
-    if(response instanceof Error) {
-      setError("Email does not exist or incorrect password.");
-    } else {
-      setError("");
-      sessionStorage.setItem('userEmail', arr[0]); // Store email in session storage
-      window.location.href = '/home'; // Redirect to home page
-    }
-  }
-}
-
 function LoginPage() {
-  const [action, setAction] = useState("Login")
-  const [error, setError] = useState("")
-  console.log(action);
+  const [action, setAction] = useState("Login");
+  const [error, setError] = useState("");
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    password: ''
+  });
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check if user is already logged in
+    const userEmail = sessionStorage.getItem('userEmail');
+    if (userEmail) {
+      navigate('/home');
+    }
+  }, [navigate]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError(""); // Clear any previous errors
+    try {
+      if (action === "Sign Up") {
+        try {
+          const response = await signUp(formData.username, formData.email, formData.password);
+          sessionStorage.setItem('userEmail', formData.email);
+          navigate('/home');
+        } catch (error) {
+          setError(error.message || "Email already exists. Please choose a different email.");
+        }
+      } else {
+        try {
+          const response = await getUser(formData.email, formData.password);
+          sessionStorage.setItem('userEmail', formData.email);
+          navigate('/home');
+        } catch (error) {
+          setError(error.message || "Invalid email or password.");
+        }
+      }
+    } catch (err) {
+      console.error("Auth error:", err);
+      setError("An unexpected error occurred. Please try again.");
+    }
+  };
+
   return (
     <div className="main-container">
       <div className="login-panel">
@@ -47,46 +70,75 @@ function LoginPage() {
             <div className="underline"></div>
           </div>
           {error && <div className="error-message">{error}</div>}
-          <form onSubmit={(e) => handleSubmit(e, action, setError)}>
-                <div className="inputs">
-                  {action !== "Login" && (
-                    <div className="input">
-                      <img src={user_icon} alt="user" />
-                      <input type="text" placeholder="Name" />
-                    </div>
-                  )}
-                  <div className="input">
-                    <img src={email_icon} alt="email" />
-                    <input type="email" placeholder="Email" />
-                  </div>
-                  <div className="input">
-                    <img src={password_icon} alt="password" />
-                    <input type="password" placeholder="Password" />
-                  </div>
+          <form onSubmit={handleSubmit}>
+            <div className="inputs">
+              {action === "Sign Up" && (
+                <div className="input">
+                  <img src={user_icon} alt="user" />
+                  <input
+                    type="text"
+                    name="username"
+                    placeholder="Name"
+                    value={formData.username}
+                    onChange={handleInputChange}
+                    required
+                  />
                 </div>
+              )}
+              <div className="input">
+                <img src={email_icon} alt="email" />
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="input">
+                <img src={password_icon} alt="password" />
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+            </div>
 
-                {action === "Sign Up" ? (
-                  <div
-                    className="forgot-password"
-                    onClick={() => setAction("Login")}
-                  >
-                    Already have an account? <span>Login</span>
-                  </div>
-                ) : (
-                  <div
-                    className="forgot-password"
-                    onClick={() => setAction("Sign Up")}>
-                    Create a new account? <span>Sign Up</span>
-                  </div>
-                )}
+            {action === "Sign Up" ? (
+              <div
+                className="forgot-password"
+                onClick={() => {
+                  setAction("Login");
+                  setError("");
+                  setFormData({ username: '', email: '', password: '' });
+                }}
+              >
+                Already have an account? <span>Login</span>
+              </div>
+            ) : (
+              <div
+                className="forgot-password"
+                onClick={() => {
+                  setAction("Sign Up");
+                  setError("");
+                  setFormData({ username: '', email: '', password: '' });
+                }}
+              >
+                Create a new account? <span>Sign Up</span>
+              </div>
+            )}
 
-                {/* submit-container now centers its children */}
-                <div className="submit-container">
-                  <div className="sub">
-                    <input type = "submit" value = {action} ></input>
-                  </div>
-                </div>
-            </form>
+            <div className="submit-container">
+              <div className="sub">
+                <input type="submit" value={action} />
+              </div>
+            </div>
+          </form>
           {action === "Login" && (
             <>
               <div className="divider"><span>or</span></div>
@@ -113,8 +165,7 @@ function LoginPage() {
         <Loader></Loader>
       </div> */}
     </div>
-
-  )
+  );
 }
 
-export default LoginPage
+export default LoginPage;

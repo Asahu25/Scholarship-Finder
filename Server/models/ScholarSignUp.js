@@ -1,22 +1,27 @@
 const {getDB} = require("../utils/databaseUtils");
 
-module.exports = class ScholarSignUp{
-    constructor(username, email, password){
-        this._id = email;
-        this.username = username;
+module.exports = class ScholarSignUp {
+    constructor(username, email, password) {
+        this._id = email;  // Using email as primary key
         this.email = email;
+        this.username = username;
         this.password = password;
+        this.createdAt = new Date();
     }
 
-    static checkEmail(email){
+    static async checkEmail(email) {
         const db = getDB();
-        const arr =  db.collection('Users').find({email: email}).toArray()
-        console.log(arr);
-        return arr.length > 0;
+        const user = await db.collection('Users').findOne({_id: email});
+        return user !== null;
     }
     
-    static save(user){
-        const db = getDB();
-        return db.collection('Users').insertOne(user);
+    static async save(user) {
+        try {
+            const db = getDB();
+            return await db.collection('Users').insertOne(user);
+        } catch (error) {
+            console.error("Error saving user:", error);
+            throw new Error("Failed to create user account");
+        }
     }
 }

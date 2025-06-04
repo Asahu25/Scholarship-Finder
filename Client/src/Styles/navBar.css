@@ -1,86 +1,82 @@
 .navbar {
     display: flex;
     justify-content: space-between;
-    padding: 1rem; /* Reduced padding for smaller navbar */
-    background-color: #f8f9fa;
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    transition: background-color 0.3s ease; /* Smooth transition for background color */
-}
-
-.navbar:hover {
-    background-color: #e9ecef; /* Slightly darker background on hover */
-}
-
-.navbar-left,
-.navbar-right {
-    display: flex;
-    gap: 2rem; /* Increased gap between buttons */
     align-items: center;
+    padding: 1rem 2rem;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-.navbar-link {
-    text-decoration: none;
-    color: #000;
-    font-weight: 500; /* Modern font weight */
-    transition: color 0.3s ease; /* Smooth transition for color */
+.navbar-left, .navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
-.navbar-link:hover {
-    color: #007bff; /* Blue color on hover */
-}
 .navbar-logo-button {
-  background: none;
-  border: none;
-  display: inline-flex;
-  align-items: center;
-  cursor: pointer;
-  padding: 0.25rem 0;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
 }
 
 .navbar-logo-img {
-  height: 43px;   
-  width: auto;
-  margin-right: 0.5rem;
-}
-
-.navbar-logo-button:hover .navbar-logo-img {
-  transform: scale(1.05);
-  transition: transform 0.2s ease;
+    height: 40px;
+    width: auto;
 }
 
 .navbar-button {
-    background: none;
+    padding: 0.5rem 1rem;
     border: none;
-    color: #000;
+    border-radius: 4px;
+    background-color: transparent;
+    color: #333;
+    font-weight: 500;
     cursor: pointer;
-    font-size: inherit;
-    text-decoration: none;
-    padding: 0.5rem 1rem; /* Ensure consistent button size */
-    box-sizing: border-box;
-    font-weight: 600; /* Slightly bolder text */
-    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transitions */
+    transition: all 0.3s ease;
 }
 
 .navbar-button:hover {
-    background-color: #e0e0e0;
-    border-radius: 6px;
-    box-sizing: border-box;
-    color: #007bff; /* Blue text on hover */
+    background-color: #f0f0f0;
+    transform: translateY(-1px);
 }
 
 .navbar-button.active {
-    background-color: #007bff; /* Blue background for active button */
-    color: #fff; /* White text for active button */
-    border-radius: 6px; /* Rounded corners for active button */
+    background-color: #4c00b4;
+    color: white;
 }
 
-/* .navbar-logo-text {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #000;   
+.navbar-button.logout {
+    background-color: #dc3545;
+    color: white;
 }
 
-.navbar-logo-button:hover .navbar-logo-text {
-  text-decoration: underline;
-} */
+.navbar-button.logout:hover {
+    background-color: #c82333;
+}
+
+.user-email {
+    color: #666;
+    font-size: 0.9rem;
+    margin-right: 1rem;
+    padding: 0.5rem;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 1rem;
+    }
+
+    .navbar-left, .navbar-right {
+        gap: 0.5rem;
+    }
+
+    .user-email {
+        display: none;
+    }
+}
