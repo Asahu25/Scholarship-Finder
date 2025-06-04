@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 
 import NavBar from "./components/navBar";
 import LoginPage from "./Pages/LoginPage";
+import SignUpPage from "./Pages/SignUpPage";
 import Favourites from "./Pages/Favourites";
 import ScholarshipHome from "./Pages/ScholarshipIndex";
 import ProtectedRoute from './components/ProtectedRoute';
@@ -17,6 +18,7 @@ export default function App() {
       <Routes>
         <Route path='/' element={<Navigate to="/home" />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
         <Route 
           path="/home" 
           element={

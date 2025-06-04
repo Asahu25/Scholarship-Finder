@@ -8,7 +8,7 @@ module.exports = class ScholarIndex{
         this.ScholarUrl = ScholarUrl;
     }
 
-    static async fetchPaginated(page, limit) {
+    static async fetchPaginated(page, limit, search = '') {
         const db = getDB();
         try {
             console.log("Fetching paginated scholarships...");
@@ -19,11 +19,16 @@ module.exports = class ScholarIndex{
 
             const skip = (page - 1) * limit;
             
+            // Build query based on search parameter
+            const query = search 
+                ? { ScholarTitle: { $regex: search, $options: 'i' } }
+                : {};
+
             // Use Promise.all to run count and find in parallel
             const [total, items] = await Promise.all([
-                db.collection('Index').countDocuments(),
+                db.collection('Index').countDocuments(query),
                 db.collection('Index')
-                    .find()
+                    .find(query)
                     .sort({ ScholarTitle: 1 })
                     .skip(skip)
                     .limit(limit)

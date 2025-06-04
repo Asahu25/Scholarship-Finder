@@ -4,8 +4,9 @@ exports.getItem = async (req, res, next) => {
     try {
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 10;
+        const search = req.query.search || '';
         
-        const { items, total } = await ScholarIndex.fetchPaginated(page, limit);
+        const { items, total } = await ScholarIndex.fetchPaginated(page, limit, search);
         
         if (!items || !Array.isArray(items)) {
             console.error("Invalid items returned from database:", items);

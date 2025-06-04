@@ -1,7 +1,14 @@
-export const addItemFromServer = async (page = 1, limit = 10) => {
+export const addItemFromServer = async (page = 1, limit = 10, search = '') => {
   try {
     console.log(`Fetching scholarships from server (page ${page})...`);
-    const response = await fetch(`http://localhost:3000/api/getItem?page=${page}&limit=${limit}`, {
+    const url = new URL('http://localhost:3000/api/getItem');
+    url.searchParams.append('page', page);
+    url.searchParams.append('limit', limit);
+    if (search) {
+      url.searchParams.append('search', search);
+    }
+
+    const response = await fetch(url, {
       credentials: 'include'
     });
     

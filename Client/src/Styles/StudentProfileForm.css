@@ -1,60 +1,73 @@
 .student-profile-form {
-    max-width: 500px;
-    margin: 50px auto;
-    margin-top:120px;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 0 10px 6px rgba(0, 0, 0, 0.1);
-    font-family: Arial, sans-serif;
+    max-width: 600px;
+    margin: 120px auto 50px;
+    padding: 2.5rem;
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.student-profile-form:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
 }
 
 .student-profile-form label {
     display: block;
-    margin-bottom: 15px;
-    font-weight: bold;
+    margin-bottom: 1rem;
+    font-weight: 600;
     color: #333;
+    font-size: 1rem;
 }
 
 .student-profile-form input {
     width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
+    padding: 0.75rem 1rem;
+    margin-top: 0.5rem;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
     box-sizing: border-box;
+    background: #f8f9fa;
+    color: #333;
+    transition: all 0.3s ease;
 }
 
 .student-profile-form input:focus {
-    border-color: #007bff;
     outline: none;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    background: #fff;
+    box-shadow: 0 0 0 2px rgba(60, 0, 157, 0.2);
 }
 
 .student-profile-form .course-of-study,
 .student-profile-form .grades,
 .student-profile-form .location,
 .student-profile-form .annual-income {
-    margin-bottom: 20px;
+    margin-bottom: 1.5rem;
 }
 
 .category-container {
     display: flex;
     align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .category-label {
-    margin-right: 10px;
-    font-weight: bold;
+    font-weight: 600;
     color: #333;
+    min-width: 120px;
 }
 
 .row-container {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 20px;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
 }
 
 .row-container label,
@@ -65,16 +78,54 @@
 .student-profile-form button {
     display: block;
     width: 100%;
-    padding: 10px;
-    background-color: #007bff;
+    padding: 1rem;
+    background: linear-gradient(135deg, #3c009d, #6a11cb);
     color: white;
     border: none;
-    border-radius: 4px;
-    font-size: 16px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
 }
 
 .student-profile-form button:hover {
-    background-color: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(60, 0, 157, 0.2);
+}
+
+.student-profile-form button:active {
+    transform: translateY(0);
+}
+
+.student-profile-form button:disabled {
+    background: #e9ecef;
+    color: #adb5bd;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+@media (max-width: 768px) {
+    .student-profile-form {
+        margin: 80px 1rem 2rem;
+        padding: 1.5rem;
+    }
+
+    .row-container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .category-container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .category-label {
+        margin-right: 0;
+    }
 }

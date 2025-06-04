@@ -61,10 +61,26 @@ module.exports = class ScholarFav{
     static async checkIfFavorited(email, scholarshipId) {
         const db = getDB();
         try {
-            const favorite = await db.collection('Favorites').findOne({
+            // First try to find by ID
+            let favorite = await db.collection('Favorites').findOne({
                 _id: new ObjectId(scholarshipId),
                 email: email
             });
+
+            if (!favorite) {
+                // If not found by ID, try to find by ScholarTitle
+                const scholarship = await db.collection('Index').findOne({
+                    _id: new ObjectId(scholarshipId)
+                });
+
+                if (scholarship) {
+                    favorite = await db.collection('Favorites').findOne({
+                        ScholarTitle: scholarship.ScholarTitle,
+                        email: email
+                    });
+                }
+            }
+
             return !!favorite; // Convert to boolean
         } catch (err) {
             console.error("Error checking favorite status:", err);

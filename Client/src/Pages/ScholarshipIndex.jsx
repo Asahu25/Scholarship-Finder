@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import '../Styles/ScholarshipIndex.css';
-import { addItemFromServer, addToFavorites, checkIfFavorited } from "../services/scholarItemServices";
+import { addItemFromServer, addToFavorites, checkIfFavorited, addFavItemFromServer } from "../services/scholarItemServices";
 import { useNavigate } from 'react-router-dom';
 
 const ScholarshipHome = () => {
@@ -11,13 +11,51 @@ const ScholarshipHome = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [totalItems, setTotalItems] = useState(0);
+  const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
 
-  const fetchScholarships = useCallback(async (page) => {
+  // Initialize favorites from server
+  useEffect(() => {
+    const initializeFavorites = async () => {
+      const userEmail = sessionStorage.getItem('userEmail');
+      if (userEmail) {
+        try {
+          const favItems = await addFavItemFromServer(userEmail);
+          const favSet = new Set(favItems.map(item => item.id));
+          setFavorites(favSet);
+        } catch (err) {
+          console.error("Error initializing favorites:", err);
+        }
+      }
+    };
+
+    initializeFavorites();
+  }, []);
+
+  const checkFavoriteStatus = async (scholarships, userEmail) => {
+    const favoritesSet = new Set();
+    await Promise.all(
+      scholarships.map(async (scholarship) => {
+        try {
+          if (scholarship.id) {
+            const isFavorited = await checkIfFavorited(scholarship.id, userEmail);
+            if (isFavorited) {
+              favoritesSet.add(scholarship.id);
+            }
+          }
+        } catch (err) {
+          console.error(`Error checking favorite status for scholarship ${scholarship.id}:`, err);
+        }
+      })
+    );
+    return favoritesSet;
+  };
+
+  const fetchScholarships = useCallback(async (page, search = '') => {
     try {
       setLoading(true);
       setError(null);
-      const data = await addItemFromServer(page);
+      const data = await addItemFromServer(page, 10, search);
       
       setScholarships(data.items);
       setCurrentPage(data.currentPage);
@@ -27,22 +65,8 @@ const ScholarshipHome = () => {
       // Check favorite status for each scholarship
       const userEmail = sessionStorage.getItem('userEmail');
       if (userEmail && data.items.length > 0) {
-        const favoritesSet = new Set();
-        await Promise.all(
-          data.items.map(async (scholarship) => {
-            try {
-              if (scholarship.id) {
-                const isFavorited = await checkIfFavorited(scholarship.id, userEmail);
-                if (isFavorited) {
-                  favoritesSet.add(scholarship.id);
-                }
-              }
-            } catch (err) {
-              console.error(`Error checking favorite status for scholarship ${scholarship.id}:`, err);
-            }
-          })
-        );
-        setFavorites(favoritesSet);
+        const favoritesSet = await checkFavoriteStatus(data.items, userEmail);
+        setFavorites(prev => new Set([...prev, ...favoritesSet]));
       }
     } catch (error) {
       console.error("Error fetching scholarships:", error);
@@ -53,14 +77,24 @@ const ScholarshipHome = () => {
   }, []);
 
   useEffect(() => {
-    fetchScholarships(1);
-  }, [fetchScholarships]);
+    fetchScholarships(1, searchQuery);
+  }, [fetchScholarships, searchQuery]);
 
   const handlePageChange = (newPage) => {
     if (newPage >= 1 && newPage <= totalPages) {
-      fetchScholarships(newPage);
+      fetchScholarships(newPage, searchQuery);
       window.scrollTo(0, 0);
     }
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setCurrentPage(1); // Reset to first page when searching
+    fetchScholarships(1, searchQuery);
+  };
+
+  const handleSearchInputChange = (e) => {
+    setSearchQuery(e.target.value);
   };
 
   const handleAddToFavorites = async (scholarship) => {
@@ -70,13 +104,18 @@ const ScholarshipHome = () => {
       return;
     }
 
+    // Check if already in favorites
+    if (favorites.has(scholarship.id)) {
+      return; // Already in favorites, do nothing
+    }
+
     try {
       await addToFavorites(scholarship, userEmail);
       setFavorites(prev => new Set([...prev, scholarship.id]));
-      alert('Added to favorites successfully!');
     } catch (error) {
       if (error.message.includes('already in favorites')) {
-        alert('This scholarship is already in your favorites.');
+        // Update local state to reflect the server state
+        setFavorites(prev => new Set([...prev, scholarship.id]));
       } else {
         console.error("Error adding to favorites:", error);
         alert('Failed to add to favorites. Please try again.');
@@ -90,7 +129,7 @@ const ScholarshipHome = () => {
         <div className="error-message" style={{ padding: '2rem', textAlign: 'center', color: 'red' }}>
           {error}
           <button 
-            onClick={() => fetchScholarships(currentPage)} 
+            onClick={() => fetchScholarships(currentPage, searchQuery)} 
             style={{ display: 'block', margin: '1rem auto' }}
           >
             Try Again
@@ -106,10 +145,12 @@ const ScholarshipHome = () => {
         <div className="hero-content">
           <h1>Find Scholarships to Help Pay for College</h1>
           <p>Search from our curated list of available scholarships.</p>
-          <form className="search-form" onSubmit={(e) => e.preventDefault()}>
+          <form className="search-form" onSubmit={handleSearch}>
             <input
               type="text"
-              placeholder="Enter keywords, school name, or fields of study"
+              placeholder="Search scholarships by name..."
+              value={searchQuery}
+              onChange={handleSearchInputChange}
             />
             <button type="submit">Search</button>
           </form>
