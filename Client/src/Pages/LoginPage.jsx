@@ -15,18 +15,21 @@ const handleSubmit = async (e, action, setError) => {
     arr = [e.target[0].value, e.target[1].value, e.target[2].value];
     const response = await signUp(arr[0], arr[1], arr[2]);
     if(response instanceof Error) {
-      setError("Email already exists. Please choose a different  email.");
+      setError("Email already exists. Please choose a different email.");
     } else {
       setError("");
-      // Handle successful signup here
+      sessionStorage.setItem('userEmail', arr[1]); // Store email in session storage
+      window.location.href = '/home'; // Redirect to home page
     }
-  }else{
+  } else {
     arr = [e.target[0].value, e.target[1].value];
     const response = await getUser(arr[0], arr[1]);
     if(response instanceof Error) {
-      setError("Email does not exist. Please choose a different email / Please Sign Up.");
+      setError("Email does not exist or incorrect password.");
     } else {
       setError("");
+      sessionStorage.setItem('userEmail', arr[0]); // Store email in session storage
+      window.location.href = '/home'; // Redirect to home page
     }
   }
 }

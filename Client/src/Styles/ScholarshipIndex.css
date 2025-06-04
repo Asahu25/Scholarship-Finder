@@ -189,25 +189,47 @@ html, body, #root {
 
 .card-buttons {
   display: flex;
-  gap: 0.75rem;
-  margin-top: auto;
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
 .card-buttons button {
-  flex: 1;
   padding: 0.5rem 1rem;
-  background: #0055a6;
-  color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.2s ease;
+  font-weight: 500;
+  transition: all 0.3s ease;
 }
 
-.card-buttons button:hover {
-  background-color: darkgreen;
-  /* background: #28a745; */
-  transform: scale(1.05);
+.card-buttons button:not(.added) {
+  background-color: #4c00b4;
+  color: white;
+}
+
+.card-buttons button:not(.added):hover {
+  background-color: #3c009d;
+  transform: translateY(-2px);
+}
+
+.card-buttons button.added {
+  background-color: #e0e0e0;
+  color: #666;
+  cursor: not-allowed;
+}
+
+.card-buttons .apply-button {
+  padding: 0.5rem 1rem;
+  background-color: #28a745;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.card-buttons .apply-button:hover {
+  background-color: #218838;
+  transform: translateY(-2px);
 }
 
 .fav-button {

@@ -17,25 +17,75 @@ export const addItemFromServer = async () => {
   }
 };
 
-export const addFavItemFromServer = async () => {
+export const addFavItemFromServer = async (email) => {
   try {
-    const response = await fetch("http://localhost:3000/api/getFavItem");
+    const response = await fetch(`http://localhost:3000/api/getFavItem/${email}`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const items = await response.json();
-    console.log("Fetched Items from Server:", items); // Log the fetched data
+    console.log("Fetched Favorites for email:", email, items);
     if (!Array.isArray(items)) {
-      console.error("Expected an array but got:", items); // Log unexpected data structure
+      console.error("Expected an array but got:", items);
       return [];
     }
     return items.map(scholarItemsToClient);
   } catch (error) {
-    console.error("Error fetching items from server:", error);
+    console.error("Error fetching favorites:", error);
     return [];
   }
 };
 
+export const addToFavorites = async (scholarship, email) => {
+  try {
+    const response = await fetch("http://localhost:3000/api/addFavorite", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ScholarTitle: scholarship.ScholarTitle,
+        Amount: scholarship.Amount,
+        Deadline: scholarship.Deadline,
+        ScholarUrl: scholarship.ScholarUrl,
+        email: email
+      }),
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    console.log("Added to favorites:", data);
+    return data;
+  } catch (error) {
+    console.error("Error adding to favorites:", error);
+    throw error;
+  }
+};
+
+export const removeFromFavorites = async (scholarshipId, email) => {
+  try {
+    const response = await fetch(`http://localhost:3000/api/removeFavorite`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        scholarshipId,
+        email
+      })
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    console.log("Removed from favorites:", data);
+    return data;
+  } catch (error) {
+    console.error("Error removing from favorites:", error);
+    throw error;
+  }
+};
 
 export const scholarItemsToClient = (serverItem) => {
   return {
@@ -54,7 +104,7 @@ export const signUp = async (username, email, password) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ username, email, password }),
+      body: JSON.stringify({ email, username, password }),
     });
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);

@@ -1,30 +1,41 @@
 import React, { useEffect, useState } from 'react';
 import '../Styles/ScholarshipIndex.css';
-import { addItemFromServer } from "../services/scholarItemServices";
+import { addItemFromServer, addToFavorites } from "../services/scholarItemServices";
+import { useNavigate } from 'react-router-dom';
 
-const ScholarshipHome = ({ addToFavourites, removeFromFavourites, favouriteList = [] }) => {
+const ScholarshipHome = () => {
   const [scholarships, setScholarships] = useState([]);
+  const [favorites, setFavorites] = useState(new Set());
+  const navigate = useNavigate();
+
   useEffect(() => {
     const fetchScholarships = async () => {
-        try {
-            const data = await addItemFromServer(); 
-            console.log("Scholarships Data:", data); 
-            setScholarships(data); 
-        } catch (error) {
-            console.error("Error fetching scholarships:", error);
-        }
+      try {
+        const data = await addItemFromServer(); 
+        console.log("Scholarships Data:", data); 
+        setScholarships(data); 
+      } catch (error) {
+        console.error("Error fetching scholarships:", error);
+      }
     };
 
     fetchScholarships();
   }, []);
 
-  const isFavourite = (id) => favouriteList.some((sch) => sch.id === id);
+  const handleAddToFavorites = async (scholarship) => {
+    const userEmail = sessionStorage.getItem('userEmail');
+    if (!userEmail) {
+      navigate('/login');
+      return;
+    }
 
-  const handleFavouriteClick = (scholarship) => {
-    if (isFavourite(scholarship.id)) {
-      removeFromFavourites(scholarship.id);
-    } else {
-      addToFavourites(scholarship);
+    try {
+      await addToFavorites(scholarship, userEmail);
+      setFavorites(prev => new Set([...prev, scholarship.id]));
+      alert('Added to favorites successfully!');
+    } catch (error) {
+      console.error("Error adding to favorites:", error);
+      alert('Failed to add to favorites. Please try again.');
     }
   };
 
@@ -69,35 +80,27 @@ const ScholarshipHome = ({ addToFavourites, removeFromFavourites, favouriteList 
 
         <section className="results-list">
           {scholarships.length === 0 ? (
-            <p>No scholarships available. Please try again later.</p> // Fallback UI
+            <p style={{ padding: '1rem' }}>Loading scholarships...</p>
           ) : (
-            scholarships.map((scholarship) => {
-              const fav = isFavourite(scholarship.id);
-
-              return (
-                <article key={scholarship.id} className="scholarship-card">
-                  <h3>{scholarship.ScholarTitle}</h3>
-                  <p className="amount">Amount: {scholarship.Amount}</p>
-                  <p className="deadline">Deadline: {scholarship.Deadline}</p>
-                  <div className="card-buttons">
-                    <a
-                      href={scholarship.ScholarUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="visit-button"
-                      >
-                        Go to website
-                    </a>
-                    <button
-                      onClick={() => handleFavouriteClick(scholarship)}
-                      className={`fav-button ${fav ? 'added' : ''}`}
-                    >
-                      {fav ? 'Remove from Favourites' : 'Add to Favourites'}
-                    </button>
-                  </div>
-                </article>
-              );
-            })
+            scholarships.map((scholarship) => (
+              <article key={scholarship.id} className="scholarship-card">
+                <h3>{scholarship.ScholarTitle}</h3>
+                <p className="amount">Up to {scholarship.Amount}</p>
+                <p className="deadline">Deadline: {scholarship.Deadline}</p>
+                <div className="card-buttons">
+                  <button 
+                    onClick={() => handleAddToFavorites(scholarship)}
+                    disabled={favorites.has(scholarship.id)}
+                    className={favorites.has(scholarship.id) ? 'added' : ''}
+                  >
+                    {favorites.has(scholarship.id) ? 'Added to Favorites' : 'Add to Favorites'}
+                  </button>
+                  <a href={scholarship.ScholarUrl} target="_blank" rel="noopener noreferrer" className="apply-button">
+                    Apply Now
+                  </a>
+                </div>
+              </article>
+            ))
           )}
         </section>
       </main>

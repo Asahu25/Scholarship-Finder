@@ -1,23 +1,49 @@
 import React, { useEffect, useState } from 'react';
 import '../Styles/ScholarshipIndex.css'; // Optional: reuse styles if needed
-import { addFavItemFromServer } from "../services/scholarItemServices";
+import { addFavItemFromServer, removeFromFavorites } from "../services/scholarItemServices";
+import { useNavigate } from 'react-router-dom';
 
-const Favourites = ({ removeFromFavourites }) => {
+const Favourites = () => {
   const [favourites, setFavourites] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchFavourites = async () => {
+      // Get email from session storage
+      const userEmail = sessionStorage.getItem('userEmail');
+      if (!userEmail) {
+        // Redirect to login if no email in session
+        navigate('/login');
+        return;
+      }
+
       try {
-        const data = await addFavItemFromServer();
+        const data = await addFavItemFromServer(userEmail);
         console.log("Favourites Data:", data);
-        setFavourites(data); // Set the fetched data to state
+        setFavourites(data);
       } catch (error) {
         console.error("Error fetching favourites:", error);
       }
     };
 
     fetchFavourites();
-  }, []);
+  }, [navigate]);
+
+  const handleRemoveFromFavorites = async (scholarshipId) => {
+    const userEmail = sessionStorage.getItem('userEmail');
+    if (!userEmail) {
+      navigate('/login');
+      return;
+    }
+
+    try {
+      await removeFromFavorites(scholarshipId, userEmail);
+      // Update the local state to remove the item
+      setFavourites(prev => prev.filter(item => item.id !== scholarshipId));
+    } catch (error) {
+      console.error("Error removing from favorites:", error);
+    }
+  };
 
   return (
     <div className="scholarship-container">
@@ -39,7 +65,10 @@ const Favourites = ({ removeFromFavourites }) => {
                 <p className="amount">Up to {scholarship.Amount}</p>
                 <p className="deadline">Deadline: {scholarship.Deadline}</p>
                 <div className="card-buttons">
-                  <button onClick={() => removeFromFavourites(scholarship.id)}>Remove</button>
+                  <button onClick={() => handleRemoveFromFavorites(scholarship.id)}>Remove</button>
+                  <a href={scholarship.ScholarUrl} target="_blank" rel="noopener noreferrer" className="apply-button">
+                    Apply Now
+                  </a>
                 </div>
               </article>
             ))
