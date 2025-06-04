@@ -5,7 +5,6 @@ import user_icon from '../assets/person.png';
 import password_icon from '../assets/password.png';
 import email_icon from '../assets/email.png';
 import family from '../assets/family.jpg';
-import GoogleButton from '../components/GoogleButton'
 import { signUp, getUser } from '../services/scholarItemServices';
 
 function LoginPage() {
@@ -139,14 +138,6 @@ function LoginPage() {
               </div>
             </div>
           </form>
-          {action === "Login" && (
-            <>
-              <div className="divider"><span>or</span></div>
-              <div className="googleButton">
-                <GoogleButton />
-              </div>
-            </>
-          )}
         </div>
       </div>
 

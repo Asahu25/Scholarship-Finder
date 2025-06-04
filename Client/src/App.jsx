@@ -8,7 +8,6 @@ import NavBar from "./components/navBar";
 import LoginPage from "./Pages/LoginPage";
 import Favourites from "./Pages/Favourites";
 import ScholarshipHome from "./Pages/ScholarshipIndex";
-import ProfilePage from './Pages/Profile';
 import ProtectedRoute from './components/ProtectedRoute';
 
 export default function App() {
@@ -31,14 +30,6 @@ export default function App() {
           element={
             <ProtectedRoute>
               <Favourites />
-            </ProtectedRoute>
-          } 
-        />
-        <Route 
-          path="/profile" 
-          element={
-            <ProtectedRoute>
-              <ProfilePage />
             </ProtectedRoute>
           } 
         />

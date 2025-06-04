@@ -95,12 +95,6 @@ export default function NavBar() {
             <div className="navbar-right">
                 {userEmail && <span className="user-email">{userEmail}</span>}
                 <button
-                    className={`navbar-button ${location.pathname === "/profile" ? "active" : ""}`}
-                    onClick={() => navigate("/profile")}
-                >
-                    Profile
-                </button>
-                <button
                     className="navbar-button logout"
                     onClick={handleLogout}
                 >
