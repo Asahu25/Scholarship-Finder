@@ -21,13 +21,13 @@ store.on('error', function(error) {
 const mongoConnect = (callback) => {
   MongoClient.connect(MONGO_URL)
     .then(client => {
-      console.log("Connected to MongoDB"); 
+      console.log("Connected to MongoDB"); // Log successful connection
       _db = client.db('ScholarCompass');
-      console.log("Using database:", _db.databaseName); 
+      console.log("Using database:", _db.databaseName); // Log the database name
       callback();
     })
     .catch(err => {
-      console.error("Error while connecting to MongoDB:", err); 
+      console.error("Error while connecting to MongoDB:", err); // Log connection errors
     });
 }
 

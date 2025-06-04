@@ -14,10 +14,12 @@ module.exports = class ScholarIndex{
             console.log("Fetching paginated scholarships...");
             const startTime = Date.now();
 
+            // Create index if it doesn't exist
             await db.collection('Index').createIndex({ ScholarTitle: 1 });
 
             const skip = (page - 1) * limit;
             
+            // Use Promise.all to run count and find in parallel
             const [total, items] = await Promise.all([
                 db.collection('Index').countDocuments(),
                 db.collection('Index')

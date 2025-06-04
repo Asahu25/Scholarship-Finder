@@ -19,6 +19,7 @@ const ProfilePage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        // TODO: Send formData to server or context
         console.log('Profile data submitted:', formData);
     };
 

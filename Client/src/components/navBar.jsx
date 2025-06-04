@@ -11,6 +11,7 @@ export default function NavBar() {
     const [userEmail, setUserEmail] = useState(null);
 
     useEffect(() => {
+        // Check authentication status whenever location changes
         const email = sessionStorage.getItem('userEmail');
         setIsAuthenticated(email !== null);
         setUserEmail(email);
@@ -24,6 +25,7 @@ export default function NavBar() {
             navigate('/login');
         } catch (error) {
             console.error("Logout failed:", error);
+            // Still clear local state and redirect even if server logout fails
             sessionStorage.clear();
             setIsAuthenticated(false);
             setUserEmail(null);
@@ -31,6 +33,7 @@ export default function NavBar() {
         }
     };
 
+    // If not authenticated and not on login page, show minimal navbar
     if (!isAuthenticated && location.pathname !== '/login') {
         return (
             <nav className="navbar">
@@ -52,6 +55,8 @@ export default function NavBar() {
             </nav>
         );
     }
+
+    // If on login page, show only logo
     if (location.pathname === '/login') {
         return (
             <nav className="navbar">
@@ -65,6 +70,8 @@ export default function NavBar() {
             </nav>
         );
     }
+
+    // Full navbar for authenticated users
     return (
         <nav className="navbar">
             <div className="navbar-left">

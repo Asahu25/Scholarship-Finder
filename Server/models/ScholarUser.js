@@ -19,6 +19,7 @@ module.exports = class ScholarUser{
             throw new Error("Incorrect password.");
         }
 
+        // Don't send password back to client
         const { password: _, ...userWithoutPassword } = user;
         return userWithoutPassword;
     }

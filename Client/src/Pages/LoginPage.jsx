@@ -19,6 +19,7 @@ function LoginPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Check if user is already logged in
     const userEmail = sessionStorage.getItem('userEmail');
     if (userEmail) {
       navigate('/home');
@@ -35,7 +36,7 @@ function LoginPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(""); 
+    setError(""); // Clear any previous errors
     try {
       if (action === "Sign Up") {
         try {
@@ -149,6 +150,7 @@ function LoginPage() {
         </div>
       </div>
 
+      {/* right panel: image + translucent overlay + overlay text */}
       <div className="image-panel">
         <img
           src={family}
@@ -158,6 +160,10 @@ function LoginPage() {
         <div className="gradient-overlay" />
         <div className="overlay-text">Welcome to Scholar Compass!</div>
       </div>
+
+      {/* <div>
+        <Loader></Loader>
+      </div> */}
     </div>
   );
 }

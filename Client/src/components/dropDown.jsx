@@ -7,7 +7,7 @@ export default function DropDown() {
                 id="dropdownMenuButton" 
                 data-bs-toggle="dropdown" 
                 aria-expanded="false"
-                style={{ backgroundColor: '#6c757d', color: '#fff', border: 'none' }} 
+                style={{ backgroundColor: '#6c757d', color: '#fff', border: 'none' }} // Custom color
             >
                 Select Category
             </button>

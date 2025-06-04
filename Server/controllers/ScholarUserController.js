@@ -5,11 +5,13 @@ exports.login = async (req, res, next) => {
         const { email, password } = req.body;
         const user = await ScholarUser.login(email, password);
         
+        // Set session data
         req.session.user = {
             email: user.email,
             username: user.username
         };
         
+        // Save session before sending response
         req.session.save((err) => {
             if (err) {
                 console.error("Session save error:", err);
@@ -33,16 +35,18 @@ exports.login = async (req, res, next) => {
 
 exports.logout = async (req, res, next) => {
     try {
+        // Clear session from store
         if (req.session) {
             req.session.destroy((err) => {
                 if (err) {
                     console.error("Session destruction error:", err);
                     return res.status(500).json({ message: "Error during logout" });
                 }
+                // Clear the session cookie
                 res.clearCookie('connect.sid', {
                     path: '/',
                     httpOnly: true,
-                    secure: false,
+                    secure: false, // Set to true if using HTTPS
                     sameSite: 'lax'
                 });
                 res.status(200).json({ message: "Logged out successfully" });

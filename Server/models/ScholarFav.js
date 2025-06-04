@@ -13,6 +13,7 @@ module.exports = class ScholarFav{
     async save() {
         const db = getDB();
         try {
+            // Check if already exists
             const existing = await db.collection('Favorites').findOne({
                 ScholarTitle: this.ScholarTitle,
                 email: this.email
@@ -64,7 +65,7 @@ module.exports = class ScholarFav{
                 _id: new ObjectId(scholarshipId),
                 email: email
             });
-            return !!favorite; 
+            return !!favorite; // Convert to boolean
         } catch (err) {
             console.error("Error checking favorite status:", err);
             return false;

@@ -2,13 +2,14 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  overflow: hidden; 
+  overflow: hidden;  /* prevents scrolling */
 }
 body{
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
   height: 100vh;
+  /* background: #0B0C2A; */
   margin: 0;
   padding: 0px;
 }
@@ -17,18 +18,19 @@ body{
 }
 .main-container {
   display: flex;
-  height: 100vh;  
-  width: 100vw;    
+  height: 100vh;   /* Ensure full screen height */
+  width: 100vw;    /* Optional: full width */
   overflow: hidden;
   margin: 0;
 }
 
+/* 2) left side holds the white box */
 .login-panel {
   flex: 0 0 30%;
   display: flex;
-  justify-content: flex-end; 
+  justify-content: flex-end; /* align to the right edge of this panel */
   align-items: center;
-  padding-right: 40px; 
+  padding-right: 40px; /* give some breathing room from the edge */
   box-sizing: border-box;
 }
 
