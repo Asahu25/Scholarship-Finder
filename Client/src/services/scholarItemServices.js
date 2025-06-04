@@ -198,12 +198,10 @@ export const logout = async () => {
       throw new Error(data.message || "Logout failed");
     }
     
-    // Clear session storage
     sessionStorage.clear();
     return data;
   } catch (error) {
     console.error("Logout error:", error);
-    // Still clear session storage even if server request fails
     sessionStorage.clear();
     throw error;
   }

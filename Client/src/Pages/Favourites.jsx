@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import '../Styles/ScholarshipIndex.css'; // Optional: reuse styles if needed
+import '../Styles/ScholarshipIndex.css'; 
 import { addFavItemFromServer, removeFromFavorites } from "../services/scholarItemServices";
 import { useNavigate } from 'react-router-dom';
 
@@ -9,10 +9,8 @@ const Favourites = () => {
 
   useEffect(() => {
     const fetchFavourites = async () => {
-      // Get email from session storage
       const userEmail = sessionStorage.getItem('userEmail');
       if (!userEmail) {
-        // Redirect to login if no email in session
         navigate('/login');
         return;
       }
@@ -38,7 +36,6 @@ const Favourites = () => {
 
     try {
       await removeFromFavorites(scholarshipId, userEmail);
-      // Update the local state to remove the item
       setFavourites(prev => prev.filter(item => item.id !== scholarshipId));
     } catch (error) {
       console.error("Error removing from favorites:", error);

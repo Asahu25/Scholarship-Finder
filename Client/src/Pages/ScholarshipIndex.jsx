@@ -24,7 +24,6 @@ const ScholarshipHome = () => {
       setTotalPages(data.totalPages);
       setTotalItems(data.totalItems);
 
-      // Check favorite status for each scholarship
       const userEmail = sessionStorage.getItem('userEmail');
       if (userEmail && data.items.length > 0) {
         const favoritesSet = new Set();

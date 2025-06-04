@@ -2,7 +2,7 @@ const {getDB} = require("../utils/databaseUtils");
 
 module.exports = class ScholarSignUp {
     constructor(username, email, password) {
-        this._id = email;  // Using email as primary key
+        this._id = email; 
         this.email = email;
         this.username = username;
         this.password = password;
