@@ -46,7 +46,6 @@ Researching scholarships across multiple sites is time-consuming and fragmented.
 
    ```ini
    MONGODB_URI=your_mongo_connection_string
-   JWT_SECRET=your_jwt_secret_key
    PORT=3000
    ```
 4. **Start the application**
