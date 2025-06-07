@@ -39,6 +39,9 @@ Researching scholarships across multiple sites is time-consuming and fragmented.
 2. **Install dependencies**
 
    ```bash
+   cd Client
+   npm install
+   cd Server
    npm install
    ```
 3. **Configure environment variables**
@@ -51,7 +54,7 @@ Researching scholarships across multiple sites is time-consuming and fragmented.
 4. **Start the application**
 
    ```bash
-   npm run dev
+   npm start
    ```
 
 The app will be available at `http://localhost:5173/home`.
