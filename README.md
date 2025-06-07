@@ -48,7 +48,6 @@ Researching scholarships across multiple sites is time-consuming and fragmented.
    Create a `.env` file in the project root with the following keys:
 
    ```ini
-   MONGODB_URI=your_mongo_connection_string
    PORT=3000
    ```
 4. **Start the application**
