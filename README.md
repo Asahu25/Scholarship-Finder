@@ -79,8 +79,6 @@ The app will be available at `http://localhost:5173/home`.
 
 ## Screenshots
 
-*Add screenshots (or a demo video link) here to showcase the UI and features.*
-
 ![Homepage](./screenshots/homepage1.png)
 ![Homepage](./screenshots/homepage2.png)
 ![Search Results](./screenshots/search.png)
@@ -91,18 +89,13 @@ The app will be available at `http://localhost:5173/home`.
 
 This project was built by four student developers and is not accepting external contributions at this time.
 
-## License
-
-*No license selected. Add your preferred license here.*
 
 ## Authors & Contact
 
 * Aditya Sahu
 * Ayush Yadav
-* Nimit Maro
-* Sujal Maheshwari
-
-For questions or feedback, open an issue on GitHub or contact: **\[[your-email@example.com](mailto:your-email@example.com)]**
+* Nimit Maroo
+* Sujal Navandher
 
 ---
 
